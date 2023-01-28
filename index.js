@@ -7,6 +7,7 @@ const VolsModel=require("./Models/Vol")
 const HotelsModel=require("./Models/Hotel")
 const CommentModel=require("./Models/Comments")
 const CroisModel=require("./Models/Croisiere")
+const RVolsModel=require("./Models/ReservationVol")
 
 const app=express();
 app.use(express.json()) ; 
@@ -26,7 +27,16 @@ mongoose.connect("mongodb://127.0.0.1:27017/Vols",{
 
 );
 
-
+app.get('/aa',async(req,res)=>{
+ 
+    const RV=new RVolsModel({prenom:"Amira",nom:"Soltani",Numero:"21002008",Email:"Amyra@gmail.com"})
+console.log(RV)
+    try{
+        await RV.save();
+         }catch(err){
+           console.log(err)
+        }
+});
 
 app.get('/com',async(req,res)=>{
  
@@ -76,6 +86,37 @@ console.log(com)
         console.log(err)
     }
     })
+
+
+
+
+    app.post('/insertvol',async(req,res)=>{
+        const prenom=req.body.prenom;
+        const nom=req.body.nom;
+        const Numero=req.body.Numero;
+        const Email=req.body.Email;
+    
+        
+         const RV=new RVolsModel({prenom:prenom,nom:nom,Numero:Numero,Email:Email}
+         
+        
+        );
+         
+        try{
+        await RV.save();
+        }catch(err){
+            console.log(err)
+        }
+        })
+    
+
+
+
+
+
+
+
+
 
     var Sentiment=require('sentiment')
     var sentiment=new Sentiment()
